@@ -60,6 +60,7 @@ The wrapper image exposes the service on port `5000` so the following docker run
   - `path` can be computed using the python `inspect` module (for GET endpoints)
 - Currently we can only define a single module in the YAML file and all entrypoints must be in that module. We should support multiple modules, each with its own list of entrypoints.
 - The endpoints are currently serviced of insecure http. HTTPs should be supported and should be the default
+- Setup the github actions to automatically build the builder image and push to a docker registry
 
 # Sample Project
 The repository also contains a sample project under the `sample_project` directory. To wrap this project as a service run the following command from the `sample_project` directory:
