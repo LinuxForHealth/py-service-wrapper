@@ -1,0 +1,15 @@
+version: 1
+project:
+  name: testProject
+  version: 1
+  module: testproject.test_module
+  entrypoints:
+    - name: ep1
+      entrypoint: hello_name_and_age
+      path: 'hello/{name}/{age}'
+    - name: ep2
+      entrypoint: hello_name
+      path: 'hello/{name}'
+    - name: ep3
+      entrypoint: hello_world
+      path: 'hello'

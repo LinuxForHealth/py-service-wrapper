@@ -1,0 +1,8 @@
+version: 1
+async: False
+project:
+  name: thisIsMyProject
+  description: this is my Project
+  entrypoints:
+    - name: ep1
+      entrypoint: main
