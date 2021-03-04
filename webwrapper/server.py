@@ -17,6 +17,7 @@ def _setup_framework(project_config):
     for route in routes:
         path = route.get('path', None)
         name = route.get('name', None)
+        methods = route.get('methods', ['GET'])
         entrypoint = route.get('entrypoint', None)
         if name is None or entrypoint is None:
             raise ValueError('path or entrypoint in the entrypoints cannot be None')
@@ -24,9 +25,10 @@ def _setup_framework(project_config):
         if path is None:
             path = name
         func = getattr(app_module, entrypoint)
+        print(methods)
         print(func)
         print(path)
-        app.add_api_route(f'/{path}', func, name=name)
+        app.add_api_route(f'/{path}', func, name=name, methods=methods)
 
     uvicorn.run(app, host='0.0.0.0', port=5000)
 

@@ -6,10 +6,21 @@ project:
   entrypoints:
     - name: ep1
       entrypoint: hello_name_and_age
-      path: 'hello/{name}/{age}'
+      path: hello/{name}/{age}
     - name: ep2
       entrypoint: hello_name
-      path: 'hello/{name}'
+      path: hello/{name}
     - name: ep3
       entrypoint: hello_world
       path: 'hello'
+    - name: ep4
+      entrypoint: hello_post
+      path: hellopost
+      methods: 
+      - POST
+      - PUT
+    - name: ep5
+      entrypoint: hello_pydantic
+      path: hellopydantic
+      methods: 
+      - PATCH
