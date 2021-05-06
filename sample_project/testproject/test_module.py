@@ -25,3 +25,7 @@ class TestModel(BaseModel):
 
 def hello_pydantic(data: TestModel):
     return f'hello {data.name}! You are {data.age} years old'
+
+
+def hello_dynamic(name: str, age: int):
+    return f'Hello, {name}! You are {age} years old'

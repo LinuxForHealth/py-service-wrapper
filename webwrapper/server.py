@@ -29,7 +29,7 @@ def _setup_framework(project_config):
 
         if path is None:
             if 'GET' in methods:
-                path_builder.build_path(func, name)
+                path = path_builder.build_path(func, name)
             else:
                 path = name
 

@@ -15,16 +15,16 @@ class TestPathBuilder(unittest.TestCase):
         self.assertEqual(str(ex_check.exception), 'not a func is not a callable object.')
 
     def test_build_path_with_base_name(self):
-        expected_path = 'base/{a}/{b}/{k}'
+        expected_path = 'base/{a:str}/{b:int}/{k:bool}'
         path = path_builder.build_path(self.func, 'base')
         self.assertEqual(path, expected_path)
 
     def test_build_path_without_base_name(self):
-        expected_path = 'test_func/{a}/{b}/{k}'
+        expected_path = 'test_func/{a:str}/{b:int}/{k:bool}'
         path = path_builder.build_path(self.func)
         self.assertEqual(path, expected_path)
 
     def test_build_path_with_param_kind(self):
-        expected_path = 'test_func/{k}'
+        expected_path = 'test_func/{k:bool}'
         path = path_builder.build_path(self.func, param_kinds=[Parameter.KEYWORD_ONLY])
         self.assertEqual(path, expected_path)
