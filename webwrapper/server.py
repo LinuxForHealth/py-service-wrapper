@@ -28,7 +28,10 @@ def _setup_framework(project_config):
         func = getattr(app_module, entrypoint)
 
         if path is None:
-            path_builder.build_path(func, name)
+            if 'GET' in methods:
+                path_builder.build_path(func, name)
+            else:
+                path = name
 
         print(methods)
         print(func)
