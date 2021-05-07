@@ -15,5 +15,8 @@ def build_path(func, base_name: str = None, param_kinds: list = None) -> str:
     for param in sig.parameters.values():
         if (param.kind in param_kinds and
                 param.default is param.empty):
-            path = path + "/{{{0}:{1}}}".format(param.name, param.annotation.__name__)
+            if hasattr(param.annotation, '__name__'):
+                path = path + "/{{{0}:{1}}}".format(param.name, param.annotation.__name__)
+            else:
+                path = path + "/{{{0}}}".format(param.name)
     return path
