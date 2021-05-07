@@ -24,3 +24,4 @@ project:
       path: hellopydantic
       methods: 
       - PATCH
+    - entrypoint: hello_dynamic

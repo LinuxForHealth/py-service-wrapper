@@ -2,6 +2,7 @@ import unittest
 
 from ..utils import yaml_parser
 
+
 class TestYamlParser(unittest.TestCase):
     def test_parse_project_configuration(self):
         project_file = yaml_parser._parse_project_configuration('webwrapper/tests/resources/test_sync_project_file.yaml')
@@ -27,4 +28,4 @@ class TestYamlParser(unittest.TestCase):
         self.assertEqual(str(ex_check.exception), 'webwrapper/tests/resources is not a file')
 
     def test_is_project_async(self):
-        
+        pass

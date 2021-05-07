@@ -4,6 +4,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from .utils import yaml_parser
+from .utils import path_builder
 
 
 def _setup_framework(project_config):
@@ -19,12 +20,19 @@ def _setup_framework(project_config):
         name = route.get('name', None)
         methods = route.get('methods', ['GET'])
         entrypoint = route.get('entrypoint', None)
-        if name is None or entrypoint is None:
-            raise ValueError('path or entrypoint in the entrypoints cannot be None')
+        if entrypoint is None:
+            raise ValueError('entrypoint in the entrypoints cannot be None')
+        if name is None:
+            name = entrypoint
+
+        func = getattr(app_module, entrypoint)
 
         if path is None:
-            path = name
-        func = getattr(app_module, entrypoint)
+            if 'GET' in methods:
+                path = path_builder.build_path(func, name)
+            else:
+                path = name
+
         print(methods)
         print(func)
         print(path)
