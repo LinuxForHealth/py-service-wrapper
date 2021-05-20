@@ -25,3 +25,9 @@ project:
       methods: 
       - PATCH
     - entrypoint: hello_dynamic
+    - name: ep6
+      entrypoint: hello_header
+      path: helloheader
+      headers:
+        - name
+        - age

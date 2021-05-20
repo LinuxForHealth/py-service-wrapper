@@ -39,6 +39,11 @@ project:
       methods: 
       - POST
       - PUT
+    - name: hello_header_endpoint
+      entrypoint: hello_header
+      path: helloheader
+      headers:
+      - name_in_header
 ```
 - The `version` on line 1 defines the version of the YAML file format being used. Currently the version is ignored since this project only supports 1 version.
 - The `project` section provides the actual details about the entrypoints into the project such as `name` and `version`.
@@ -48,6 +53,7 @@ project:
   - The `entrypoint` which is the name of the function in the `project.module` which needs to be exposed.
   - A `path` which is the url at which the endpoint will be exposed. This path can also contain any path parameters that will be passed to the exposed function.
   - Optionally `methods` as a list of HTTP methods to expose for the endpoint (defaults to GET)
+  - Optionally `headers` as a list of parameters of the entrypoint that need to be treated as HTTP header values. Any underscores in the parameter name will be converted to dashes when looking for HTTP headers, so `name_in_header` will be passed the value of the header `name-in-header`
 
 ## Build a wrapper container for a project
 To use the builder docker image to create a wrapper image for a python project the following command can be executed from that projects root:
