@@ -3,7 +3,6 @@
 *.egg-info
 *.pyc
 sample_project/build
-sample_project/dist
 .vscode
 Pipfile
 Pipfile.lock
