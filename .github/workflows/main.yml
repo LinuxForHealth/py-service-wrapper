@@ -33,4 +33,4 @@ jobs:
         run: |
           cd sample_project/
           python setup.py bdist -d dist/
-          docker run -v $(pwd):/tmp/project -v /var/run/docker.sock:/var/run/docker.sock -e PROJECT_ROOT=/tmp/project -e PROJECT_DIST=dist/test_project-0.0.1-py3-none-any.whl -e PROJECT_YAML=project.yaml -e IMAGE_NAME=sampleproject:1.0 py-service-wrapper-build-utils:latest
+          docker run -v $(pwd):/tmp/project -v /var/run/docker.sock:/var/run/docker.sock -e PROJECT_ROOT=/tmp/project -e PROJECT_DIST=dist/test-project-0.0.1.linux-x86_64.tar.gz -e PROJECT_YAML=project.yaml -e IMAGE_NAME=sampleproject:1.0 py-service-wrapper-build-utils:latest
