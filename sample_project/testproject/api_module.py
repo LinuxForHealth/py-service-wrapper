@@ -49,7 +49,8 @@ class Database:
             CREATE TABLE IF NOT EXISTS users(
                 id serial PRIMARY KEY,
                 first_name text,
-                last_name text
+                last_name text,
+                UNIQUE (first_name, last_name)
             )
         """
         )
@@ -57,7 +58,7 @@ class Database:
         # Insert a record into the created table.
         result = await self._pool.execute(
             """
-            INSERT INTO users(first_name, last_name) VALUES($1, $2)
+            INSERT INTO users(first_name, last_name) VALUES($1, $2) ON CONFLICT (first_name, last_name) DO NOTHING
         """,
             fname,
             lname,

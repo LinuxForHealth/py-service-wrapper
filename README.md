@@ -25,7 +25,7 @@ version: 1
 project:
   name: testProject
   version: 1
-  module: testproject.test_module
+  module: testproject.api_module
   startup:
     - serviceone_connect
     - servicetwo_connect

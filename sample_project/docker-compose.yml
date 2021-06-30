@@ -21,5 +21,11 @@ services:
         depends_on:
             - "postgres"
             - "minio"
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://sample_service:5000"]
+            interval: 1m30s
+            timeout: 10s
+            retries: 3
+            start_period: 10s
 volumes:
     data1-1:

@@ -2,7 +2,7 @@ version: 1
 project:
   name: testProject
   version: 1
-  module: testproject.test_module
+  module: testproject.api_module
   startup:
     - postgres_connect
     - minio_connect
@@ -39,12 +39,16 @@ project:
     - name: ep7
       entrypoint: insert_user
       path: insert_user
+      methods:
+        - POST
     - name: ep8
       entrypoint: fetch_users
       path: fetch_users
     - name: ep9
       entrypoint: upload
       path: upload
+      methods:
+        - POST
     - name: ep10
       entrypoint: download
       path: download
