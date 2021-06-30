@@ -3,6 +3,11 @@ project:
   name: testProject
   version: 1
   module: testproject.test_module
+  startup:
+    - postgres_connect
+    - minio_connect
+  shutdown:
+    - close
   entrypoints:
     - name: ep1
       entrypoint: hello_name_and_age
@@ -12,18 +17,18 @@ project:
       path: hello/{name}
     - name: ep3
       entrypoint: hello_world
-      path: 'hello'
+      path: "hello"
     - name: ep4
       entrypoint: hello_post
       path: hellopost
-      methods: 
-      - POST
-      - PUT
+      methods:
+        - POST
+        - PUT
     - name: ep5
       entrypoint: hello_pydantic
       path: hellopydantic
-      methods: 
-      - PATCH
+      methods:
+        - PATCH
     - entrypoint: hello_dynamic
     - name: ep6
       entrypoint: hello_header
@@ -31,3 +36,15 @@ project:
       headers:
         - name
         - age
+    - name: ep7
+      entrypoint: insert_user
+      path: insert_user
+    - name: ep8
+      entrypoint: fetch_users
+      path: fetch_users
+    - name: ep9
+      entrypoint: upload
+      path: upload
+    - name: ep10
+      entrypoint: download
+      path: download

@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+    postgres:
+        image: postgres:13.1
+        container_name: postgres-docker
+        ports:
+        - 5434:5432
+        environment:
+        - POSTGRES_PASSWORD=postgres
+    minio:
+        image: minio/minio:latest
+        ports:
+            - "9001:9000"
+        volumes:
+            - data1-1:/data
+        command: server /data
+    sample_service:
+        image: "sampleproject:1.0" # or use the latest in artifactory
+        ports:
+            - "5000:5000"
+        depends_on:
+            - "postgres"
+            - "minio"
+volumes:
+    data1-1:

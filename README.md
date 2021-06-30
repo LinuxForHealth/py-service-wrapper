@@ -26,6 +26,11 @@ project:
   name: testProject
   version: 1
   module: testproject.test_module
+  startup:
+    - serviceone_connect
+    - servicetwo_connect
+  shutdown:
+    - close
   entrypoints:
     - name: hello_world_endpoint
       entrypoint: hello_world
@@ -48,6 +53,7 @@ project:
 - The `version` on line 1 defines the version of the YAML file format being used. Currently the version is ignored since this project only supports 1 version.
 - The `project` section provides the actual details about the entrypoints into the project such as `name` and `version`.
 - the `project.module` defines the module under which the functions that need to be exposed as the services reside
+- the `startup` and `shutdown` are lists of functions to be called during startup and shutdown respectively
 - entrypoints is a list where each entry is a separate endpoint for the service and each entry contains:
   - A unique `name`.
   - The `entrypoint` which is the name of the function in the `project.module` which needs to be exposed.
@@ -92,3 +98,15 @@ You can then access the exposed endpoints at:
 - http://localhost:5000/hello
 - http://localhost:5000/hello/myname
 - http://localhost:5000/hello/myname/50
+
+Sample Queries To experiment with sample project
+
+```bash
+curl -X 'GET' \
+  'http://localhost:5000/insert_user?fname=goku&lname=son' \
+  -H 'accept: application/json'
+
+curl -X 'GET' \
+'http://localhost:5000/fetch_users?fname=goku' \
+-H 'accept: application/json'
+```

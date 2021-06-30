@@ -10,10 +10,13 @@ ADD . /tmp/py-service-wrapper
 ENV PYWEBWRAPPER_FRAMEWORK ${PYWEBWRAPPER_FRAMEWORK}
 ENV PYWEBWRAPPER_PROJECT_ROOT .
 ENV PYWEBWRAPPER_PROJECT_FILE ${PROJECT_YAML}
-
+RUN apk --no-cache add gcc musl-dev
+RUN pip install --upgrade pip
 RUN cd /tmp/py-service-wrapper && pip install .
 RUN cd ${PROJECT_ROOT} && pip install ${PROJECT_DIST}
 RUN mkdir /opt/app
+
+
 
 WORKDIR /opt/app
 
