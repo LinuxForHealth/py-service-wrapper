@@ -27,5 +27,15 @@ services:
             timeout: 10s
             retries: 3
             start_period: 10s
+    integration_test:
+        build:
+            context: .
+            dockerfile: pytest.dockerfile
+        environment:
+            - SERVICE_HOST=sample_service
+        depends_on:
+            - "sample_service"
+
+
 volumes:
     data1-1:

@@ -42,7 +42,4 @@ jobs:
       - name: Run integration tests
         run: |
           cd sample_project/
-          docker-compose up -d
-          sleep 10
-          pytest
-          docker-compose down -v
+          docker-compose up --build --abort-on-container-exit
