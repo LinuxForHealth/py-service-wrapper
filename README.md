@@ -1,5 +1,7 @@
 # py-service-wrapper
 
+[![CI](https://github.com/ayushgarg0694/py-service-wrapper/actions/workflows/main.yml/badge.svg)](https://github.com/ayushgarg0694/py-service-wrapper/actions/workflows/main.yml)
+
 This project allows the user to build a docker container that wraps a python library as a service. It uses [FastAPI](https://fastapi.tiangolo.com/) and [uvicorn](https://www.uvicorn.org/) to wrap the project as a web service in the container.
 
 There are only two requirements for the project that is being wrapped:
@@ -98,3 +100,14 @@ You can then access the exposed endpoints at:
 - http://localhost:5000/hello
 - http://localhost:5000/hello/myname
 - http://localhost:5000/hello/myname/50
+
+To run sample projects integration tests, leverage docker-compose
+
+```
+cd sample_project
+docker-compose up --build --abort-on-container-exit
+```
+
+This should bring up all the services and run integration tests.
+
+Note: Integration tests are also run as part of Github Actions.
