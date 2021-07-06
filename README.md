@@ -1,6 +1,6 @@
 # py-service-wrapper
 
-[![CI](https://github.com/ayushgarg0694/py-service-wrapper/actions/workflows/main.yml/badge.svg)](https://github.com/ayushgarg0694/py-service-wrapper/actions/workflows/main.yml)
+[![CI](https://github.com/LinuxForHealth/py-service-wrapper/actions/workflows/main.yml/badge.svg)](https://github.com/LinuxForHealth/py-service-wrapper/actions/workflows/main.yml)
 
 This project allows the user to build a docker container that wraps a python library as a service. It uses [FastAPI](https://fastapi.tiangolo.com/) and [uvicorn](https://www.uvicorn.org/) to wrap the project as a web service in the container.
 
