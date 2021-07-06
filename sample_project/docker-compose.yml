@@ -1,0 +1,41 @@
+version: "3.2"
+services:
+    postgres:
+        image: postgres:13.1
+        container_name: postgres-docker
+        ports:
+        - 5434:5432
+        environment:
+        - POSTGRES_PASSWORD=postgres
+    minio:
+        image: minio/minio:latest
+        ports:
+            - "9001:9000"
+        volumes:
+            - data1-1:/data
+        command: server /data
+    sample_service:
+        image: "sampleproject:1.0" # or use the latest in artifactory
+        ports:
+            - "5000:5000"
+        depends_on:
+            - "postgres"
+            - "minio"
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://sample_service:5000"]
+            interval: 1m30s
+            timeout: 10s
+            retries: 3
+            start_period: 10s
+    integration_test:
+        build:
+            context: .
+            dockerfile: pytest.dockerfile
+        environment:
+            - SERVICE_HOST=sample_service
+        depends_on:
+            - "sample_service"
+
+
+volumes:
+    data1-1:

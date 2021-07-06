@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,18 +19,27 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: setup python env
+        run: pip install pytest pyaml
+
       # Runs a single command using the runners shell
       - name: Build py service wrapper utility image
-        run: docker build . --file Dockerfile --tag py-service-wrapper-build-utils
-      
+        run: |
+          pytest webwrapper/
+          docker build . --file Dockerfile --tag py-service-wrapper-build-utils
+
       - name: Build python distribution and service docker image
         run: |
           cd sample_project/
-          python setup.py bdist -d dist/
-          docker run -v $(pwd):/tmp/project -v /var/run/docker.sock:/var/run/docker.sock -e PROJECT_ROOT=/tmp/project -e PROJECT_DIST=dist/test-project-0.0.1.linux-x86_64.tar.gz -e PROJECT_YAML=project.yaml -e IMAGE_NAME=sampleproject:1.0 py-service-wrapper-build-utils:latest
+          python setup.py bdist_wheel -d dist/
+          docker run -v $(pwd):/tmp/project -v /var/run/docker.sock:/var/run/docker.sock -e PROJECT_ROOT=/tmp/project -e PROJECT_DIST=dist/test_project-0.0.1-py3-none-any.whl -e PROJECT_YAML=project.yaml -e IMAGE_NAME=sampleproject:1.0 py-service-wrapper-build-utils:latest
+
+      - name: Run integration tests
+        run: |
+          cd sample_project/
+          docker-compose up --build --abort-on-container-exit
