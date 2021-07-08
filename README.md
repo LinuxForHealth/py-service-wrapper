@@ -1,5 +1,7 @@
 # py-service-wrapper
 
+[![CI](https://github.com/LinuxForHealth/py-service-wrapper/actions/workflows/main.yml/badge.svg)](https://github.com/LinuxForHealth/py-service-wrapper/actions/workflows/main.yml)
+
 This project allows the user to build a docker container that wraps a python library as a service. It uses [FastAPI](https://fastapi.tiangolo.com/) and [uvicorn](https://www.uvicorn.org/) to wrap the project as a web service in the container.
 
 There are only two requirements for the project that is being wrapped:
@@ -25,7 +27,12 @@ version: 1
 project:
   name: testProject
   version: 1
-  module: testproject.test_module
+  module: testproject.api_module
+  startup:
+    - serviceone_connect
+    - servicetwo_connect
+  shutdown:
+    - close
   entrypoints:
     - name: hello_world_endpoint
       entrypoint: hello_world
@@ -48,6 +55,7 @@ project:
 - The `version` on line 1 defines the version of the YAML file format being used. Currently the version is ignored since this project only supports 1 version.
 - The `project` section provides the actual details about the entrypoints into the project such as `name` and `version`.
 - the `project.module` defines the module under which the functions that need to be exposed as the services reside
+- the `startup` and `shutdown` are lists of functions to be called during startup and shutdown respectively
 - entrypoints is a list where each entry is a separate endpoint for the service and each entry contains:
   - A unique `name`.
   - The `entrypoint` which is the name of the function in the `project.module` which needs to be exposed.
@@ -92,3 +100,14 @@ You can then access the exposed endpoints at:
 - http://localhost:5000/hello
 - http://localhost:5000/hello/myname
 - http://localhost:5000/hello/myname/50
+
+To run sample projects integration tests, leverage docker-compose
+
+```
+cd sample_project
+docker-compose up --build --abort-on-container-exit
+```
+
+This should bring up all the services and run integration tests.
+
+Note: Integration tests are also run as part of Github Actions.
