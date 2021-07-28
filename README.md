@@ -8,6 +8,9 @@ There are only two requirements for the project that is being wrapped:
 1. It is packaged in a pip installable format such as sdist or a python wheel.
 2. It provides a YAML file that lists the entrypoints into the library that need to be exposed as a service. The format of the YAML file is discussed below in more detail.
 
+**In addition to the above** requirements, the service wrapper deployments can change the default uvicorn internal HTTP default port number 5000 by setting the following environment variable or passing it to the docker service run command.
+* PY_SERVICE_WRAPPER_PORT 
+
 The py-service-wrapper project consists of two parts:
 
 1. The python code that parses the YAML file and creates the appropriate endpoints. This code can be found under the webwrapper package in this repository.
@@ -74,9 +77,11 @@ where:
 - `<final image tag>` is what that the wrapper docker image will be tagged as
 
 ## Run the wrapper docker image
-The wrapper image exposes the service on port `5000` so the following docker run command can be used to run the container in a local environment:
-
+The wrapper image exposes the service on port PY_SERVICE_WRAPPER_PORT (default is `5000`) so one of the following docker run commands can be used to run the container in a local environment:
 `docker run -p 5000:5000 <final image tag>`
+
+or, to run on a different internal port (replace the "<...>" with your chosen values):
+`docker run --env PY_SERVICE_WRAPPER_PORT=<internal port value> -p <external port>:<internal port value> sampleproject:1.0`
 
 ## TODO:
 - Currently the `name`, `entrypoint`, and `path` for each entrypoint need to be explicitly defined in the YAML file. These should be made dynamic so that only `entrypoint` is the required.
