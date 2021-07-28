@@ -27,14 +27,26 @@ def fix_function_signature_for_headers(func, headers):
 
 def _setup_framework(project_config):
 
+    # Py service wrapper deployments need to define the following
+    # environment variable if a port other than the default is needed.
+    _port = int(os.getenv("PY_SERVICE_WRAPPER_PORT", default="5000"))
+
     routes = project_config["project"]["entrypoints"]
     module_path = project_config["project"]["module"]
-    startups = project_config["project"]["startup"]
-    shutdowns = project_config["project"]["shutdown"]
+
     app_module = importlib.import_module(module_path)
 
-    start_funcs = [getattr(app_module, startup) for startup in startups]
-    shutdown_funcs = [getattr(app_module, shutdown) for shutdown in shutdowns]
+    start_funcs = None
+    shutdown_funcs = None
+    startup = "startup"
+    shutdown = "shutdown"
+    if startup in project_config["project"]:
+        startups = project_config["project"][startup]
+        start_funcs = [getattr(app_module, sp) for sp in startups]
+
+    if shutdown in project_config["project"]:
+        shutdowns = project_config["project"][shutdown]
+        shutdown_funcs = [getattr(app_module, sn) for sn in shutdowns]
 
     app = FastAPI(
         title=project_config["project"]["name"],
@@ -66,7 +78,7 @@ def _setup_framework(project_config):
 
         app.add_api_route(f"/{path}", func, name=name, methods=methods)
 
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=_port)
 
 
 def main():
