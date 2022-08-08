@@ -7,3 +7,4 @@ sample_project/build
 Pipfile
 Pipfile.lock
 dist/
+build/
