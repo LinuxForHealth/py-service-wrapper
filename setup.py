@@ -1,9 +1,9 @@
 import os
 from setuptools import setup, find_packages
 
-requirements = ["fastapi==0.62.0", "uvicorn==0.13.1", "pyyaml==5.3.1"]
+requirements = ["fastapi==0.79.0", "uvicorn==0.18.2", "pyyaml==6.0"]
 
-test_requirements = ["pytest==4.6.3", "pytest-cov==2.7.1"]
+test_requirements = ["pytest==7.1.2", "pytest-cov==3.0.0"]
 
 
 setup(
@@ -11,11 +11,11 @@ setup(
     license="BSD license",
     include_package_data=True,
     keywords="fhir, resources, python, hl7, health IT, healthcare",
-    name="py-web-wrapper",
+    name="py-service-wrapper",
     packages=find_packages(".", exclude=["*tests*"]),
     install_requires=requirements,
     tests_require=test_requirements + requirements,
-    url="https://github.ibm.com/ebaron/dicom-fhir-converter",
+    url="https://github.com/LinuxForHealth/py-service-wrapper",
     version="0.0.1",
     python_requires=">=3.6",
 )

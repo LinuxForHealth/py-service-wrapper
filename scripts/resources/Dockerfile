@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.9-alpine
 
 ARG PYWEBWRAPPER_FRAMEWORK
 ARG PROJECT_DIST
