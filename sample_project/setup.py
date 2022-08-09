@@ -9,5 +9,5 @@ setup(
     packages=find_packages(".", exclude=["*tests*"]),
     version="0.0.1",
     install_requires=["asyncpg==0.26.0", "minio==7.1.11"],
-    python_requires=">=3.8",
+    python_requires=">=3.9",
 )

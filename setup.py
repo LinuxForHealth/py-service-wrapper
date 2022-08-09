@@ -8,7 +8,7 @@ test_requirements = ["pytest==7.1.2", "pytest-cov==3.0.0"]
 
 setup(
     description="Wraps python projects and serves them over HTTPs",
-    license="BSD license",
+    license="Apache 2.0",
     include_package_data=True,
     keywords="fhir, resources, python, hl7, health IT, healthcare",
     name="py-service-wrapper",
@@ -17,5 +17,5 @@ setup(
     tests_require=test_requirements + requirements,
     url="https://github.com/LinuxForHealth/py-service-wrapper",
     version="0.0.1",
-    python_requires=">=3.6",
+    python_requires=">=3.9",
 )
