@@ -1,8 +1,7 @@
-version: "3.2"
+version: "3.9"
 services:
     postgres:
         image: postgres:13.1
-        container_name: postgres-docker
         ports:
         - 5434:5432
         environment:
@@ -21,6 +20,7 @@ services:
         depends_on:
             - "postgres"
             - "minio"
+        command: ["sh", "-c", "sleep 10 && python -m webwrapper.server"]
         healthcheck:
             test: ["CMD", "curl", "-f", "http://sample_service:5000"]
             interval: 1m30s
@@ -35,7 +35,6 @@ services:
             - SERVICE_HOST=sample_service
         depends_on:
             - "sample_service"
-
 
 volumes:
     data1-1:
