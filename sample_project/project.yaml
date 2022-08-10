@@ -2,7 +2,9 @@ version: 1
 project:
   name: testProject
   version: 1
-  module: testproject.api_module
+  modules:
+    second_mod: testproject.second_module
+    _default: testproject.api_module
   startup:
     - postgres_connect
     - minio_connect
@@ -10,22 +12,22 @@ project:
     - close
   entrypoints:
     - name: ep1
-      entrypoint: hello_name_and_age
+      entrypoint: second_mod.hello_name_and_age
       path: hello/{name}/{age}
     - name: ep2
-      entrypoint: hello_name
+      entrypoint: second_mod.hello_name
       path: hello/{name}
     - name: ep3
-      entrypoint: hello_world
+      entrypoint: second_mod.hello_world
       path: "hello"
     - name: ep4
-      entrypoint: hello_post
+      entrypoint: second_mod.hello_post
       path: hellopost
       methods:
         - POST
         - PUT
     - name: ep5
-      entrypoint: hello_pydantic
+      entrypoint: _default.hello_pydantic
       path: hellopydantic
       methods:
         - PATCH

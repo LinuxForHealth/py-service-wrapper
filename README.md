@@ -30,15 +30,17 @@ version: 1
 project:
   name: testProject
   version: 1
-  module: testproject.api_module
+  modules: 
+    friendly_name: module_path
+    _default: testproject.api_module
   startup:
-    - serviceone_connect
+    - friendly_name.serviceone_connect
     - servicetwo_connect
   shutdown:
     - close
   entrypoints:
     - name: hello_world_endpoint
-      entrypoint: hello_world
+      entrypoint: friendly_name.hello_world
       path: 'hello'
     - name: hello_name_endpoint
       entrypoint: hello_name
@@ -57,11 +59,11 @@ project:
 ```
 - The `version` on line 1 defines the version of the YAML file format being used. Currently the version is ignored since this project only supports 1 version.
 - The `project` section provides the actual details about the entrypoints into the project such as `name` and `version`.
-- the `project.module` defines the module under which the functions that need to be exposed as the services reside
-- the `startup` and `shutdown` are lists of functions to be called during startup and shutdown respectively
+- the `project.modules` defines a dictionary of module_names (which can be any arbitrary name) and a module under which some of the functions that need to be exposed as the services reside. It supports a special `_default` module name which will be used if no module name is provided in the reference to the function (see startup description below)
+- the `startup` and `shutdown` are lists of functions to be called during startup and shutdown respectively. If functions are in the format `xxx.yyy`, `xxx` is assumed to be the reference to the modules "friendly name" in the section above. If no module friendly name is provided (`yyy` only) then module_name is assumed to be `_default`
 - entrypoints is a list where each entry is a separate endpoint for the service and each entry contains:
   - A unique `name`.
-  - The `entrypoint` which is the name of the function in the `project.module` which needs to be exposed.
+  - The `entrypoint` which is the name of the function in the `project.module` which needs to be exposed. It supports both <module_name>.<function_name> and <function_name> only style of reference to the function. In the latter case `_default` module_name will be used if provided (otherwise an error will be raised)
   - A `path` which is the url at which the endpoint will be exposed. This path can also contain any path parameters that will be passed to the exposed function.
   - Optionally `methods` as a list of HTTP methods to expose for the endpoint (defaults to GET)
   - Optionally `headers` as a list of parameters of the entrypoint that need to be treated as HTTP header values. Any underscores in the parameter name will be converted to dashes when looking for HTTP headers, so `name_in_header` will be passed the value of the header `name-in-header`
